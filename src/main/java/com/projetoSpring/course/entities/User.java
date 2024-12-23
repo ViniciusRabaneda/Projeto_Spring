@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,7 +15,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_use")
+@Table(name = "tb_user")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
@@ -25,6 +27,8 @@ public class User implements Serializable {
 	private String phone;
 	private String password;
 	
+	
+	@JsonIgnore // como a classe User e Order é uma associação de mão dupla, ela gera um looping ao chamar uma requisição.Para evitar isso usamos o comando JsonIgnore  
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
