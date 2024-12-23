@@ -9,6 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.projetoSpring.course.entities.enums.OrderStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -40,6 +42,8 @@ public class Order implements Serializable {
 	@OneToMany(mappedBy = "id.order") // essa notação se da pelo fato de que na classe OrderItem, existe o atributo id que é composto por um order.
 	private Set<OrderItem> items = new HashSet<>();
 	
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL) // Neste caso como o relacionamento é 1:1, vamos mapear as entidades para ter o mesmo id através do comando "cascade = CascadeType.ALL". EX: Se o pedido for 5 o código de pagamento também será 5.
+	private Payment payment;
 	
 	public Order() {
 
@@ -51,6 +55,8 @@ public class Order implements Serializable {
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
+	
+
 
 	public Long getId() {
 		return id;
@@ -86,6 +92,15 @@ public class Order implements Serializable {
 		this.client = client;
 	}
 	
+	
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
+
 	public Set<OrderItem> getItems(){
 		return items;
 	}
