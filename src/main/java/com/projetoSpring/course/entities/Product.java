@@ -9,6 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -25,6 +28,12 @@ public class Product implements Serializable {
 	private Double price;
 	private String imgUrl;
 
+	@ManyToMany // como é muito para muitos é necessário uma criar uma tabela de associação no
+				// banco de dados. Poderia ser criada tanto em product quanto category, escolhi
+				// fazer aqui.
+	@JoinTable(name = "tb_product_category", // nome da tabela 
+	joinColumns = @JoinColumn(name = "product_id"), // nome da coluna que possuira a chave estrangeira
+	inverseJoinColumns = @JoinColumn(name = "category_id")) // nome da chave estrangeira da outra entidade
 	private Set<Category> categories = new HashSet<>();// utilizando Set ao invés de List para impedir que um exista um
 														// produto com mais de uma ocorrência da mesma categoria
 

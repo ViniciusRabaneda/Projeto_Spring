@@ -4,10 +4,13 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,6 +24,8 @@ public class Category implements Serializable {
 	private Long id;
 	private String name;
 	
+	@JsonIgnore // para evitar o looping de N para N
+	@ManyToMany(mappedBy = "categories") // nome do conjunto que esta em Product
 	private Set<Product> products;
 	
 	public Category() {
