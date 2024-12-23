@@ -22,7 +22,7 @@ public class UserService {
 	
 	public User findById(Long Id) {
 		Optional<User> obj =  repository.findById(Id);
-		return obj.get();
+		return obj.get(); // Foi necessário utilizar o get pois estamos usando o Optional, se não utilizassemos e o valor voltasse null daria problema
 	}
 	
 }
