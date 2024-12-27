@@ -56,7 +56,7 @@ public class Category implements Serializable {
 	public Set<Product> getProducts() {
 		return products;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -73,5 +73,7 @@ public class Category implements Serializable {
 		Category other = (Category) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	
 
 }
